@@ -10,10 +10,7 @@
 #include <vector>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
-#include <MGE/Core/classes/AssetManager.hpp>
-#include <MGE/Core/classes/StateManager.hpp>
-#include <MGE/Core/classes/StatManager.hpp>
-#include <MGE/Core/Core_types.hpp>
+#include <core/Core_types.hpp>
 
 namespace MGE
 {
@@ -50,15 +47,8 @@ namespace MGE
 			*/
 			bool isRunning() const;
 
-      /**
-       * SetGraphicRange will set theGraphicRange value provided if it fits
-       * within the GraphicRange enumeration. It is typically called with the
-       * result of CalculateRange in the InitRenderer method.
-       * @param[in] theGraphicRange to set
-       */
-      void setGraphicRange(const GraphicRange theGraphicRange);
-
-			/**
+ 
+       /**
        * Returns the current game loop update rate being
        * used.
        * @return update rate in Hz (updates per second)
@@ -77,19 +67,11 @@ namespace MGE
        */
       void setUpdateRate(float rate);
 
-      /*
-       * Set the maximum number of sequential updates
-       * allowed in any given game loop. If your FPS is
-       * struggling, you should set theMaxUpdates to 1.
-       * @param[in] theMaxUpdates range is [1,200]
-       */
-      void setMaxUpdates(int newMaxUpdates);
-
-			 /**
+       /**
        * Quit will signal the Application to stop running.
        * @param[in] exitCode to use when the Run method returns
        */
-			void quit(int exitCode = 1);
+	   void quit(int exitCode = 1);
 
 
 		protected:
@@ -100,15 +82,15 @@ namespace MGE
        */
       IApp(const std::string theTitle = "MGE Application");
 
-			/**
-       * Registers custom IAssetHandler derived classes for a specific game application.
-			*/
+	  /**
+      * Registers custom IAssetHandler derived classes for a specific game application.
+	  */
       virtual void initCustomAssetHandlers() = 0;
 
-			/*
-			* Inits the gamestates for the application
-			*/
-			virtual void initCustomGameStates() = 0;
+	  /*
+	   * Inits the gamestates for the application
+	   */
+	  virtual void initCustomGameStates() = 0;
 			
       /**
        * Responsible for monitoring IsRunning and exiting when the
@@ -130,15 +112,7 @@ namespace MGE
 
 	private:
 
-    /**
-      * calculateRange is responsible for returning the best GraphicRange
-      * value to use for the given window height provided.
-      * @param[in] theHeight to use as part of calculation.
-      * @return a GraphicRange enum value computed
-      */
-		const GraphicRange calculateRange(int theHeight) const;
-
-		/**
+ 	/**
      * Initializes the Rendering window that
      * will be used to display the games graphics.
      */
@@ -177,9 +151,9 @@ namespace MGE
 			/// Default video bits per pixel (color depth) 
 			static const unsigned int DEFAULT_VIDEO_BPP = 32;
 			/// Default application wide settings file string
-			static const char* APP_SETTINGS;
+		  static const char* APP_SETTINGS;
 
-			//////////////////////////////////////////////////////////////////////////
+		  //////////////////////////////////////////////////////////////////////////
 			// Vairables
 			//////////////////////////////////////////////////////////////////////////
 		  /// Title to use for Window
@@ -192,15 +166,9 @@ namespace MGE
 		  sf::ContextSettings       mContextSettings;
 		  /// Window style to use when creating Render window
 		  unsigned long             mWindowStyle;
-		  /// Recommended Graphic Range to use based on screen height
-		  GraphicRange              mGraphicRange;
 
-			/// AssetManager for managing assets
-			AssetManager              mAssetManager;
-			// StatManager for managing game statistics
-			StatManager               mStatManager;
-			/// StateManager for managing states
-			StateManager              mStateManager;
+          /// StateManager for managing states
+		  StateManager              mStateManager;
 
 		private:
 			/// Static instance variables assigned at creation
@@ -214,10 +182,6 @@ namespace MGE
 
 			/// Value that holds the update rate in milliseconds used for a fixed loop time
 			float					mUpdateRate;
-
-			/// Maximum sequential fixed update calls allowed to to meet minimum frame rate
-			int						mMaxUpdates;
-
 	};
 }
 

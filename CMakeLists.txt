@@ -38,7 +38,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 SET_PROPERTY(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # find external SFML libraries --- hmm, can make macro out of this! Too much repetition of code!
-set(SFML_INSTALL_DIR ${ANT_DEPENDENCIES_DIR}/sfml/)
+set(SFML_INSTALL_DIR dependencies/sfml/)
 ExternalProject_Add(
     sfml
     GIT_REPOSITORY https://github.com/LaurentGomila/SFML.git
@@ -66,6 +66,28 @@ INCLUDE_DIRECTORIES(${SFML_INSTALL_DIR}/include)
 # Get binary directory of external project
 INCLUDE_DIRECTORIES(${SFML_INSTALL_DIR}/bin)
 set(SFML_LIB_DIR ${SFML_INSTALL_DIR}/lib)
+
+# External libraries easylogging
+set(ELPP_INSTALL_DIR dependencies/sfml/)
+ExternalProject_Add(
+    easyloggingpp
+    GIT_REPOSITORY https://github.com/easylogging/easyloggingpp.git
+    TIMEOUT 10  
+    # Force separate output paths for debug and release builds to allow easy
+    # identification of correct lib in subsequent TARGET_LINK_LIBRARIES commands
+    CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${ELPP_INSTALL_DIR}
+               -DCMAKE_CXX_FLAGS=${MSVC_COMPILER_DEFS}
+               -DBUILD_SHARED_LIBS=ON
+    # Wrap download, configure and build steps in a script to log output   
+    LOG_DOWNLOAD ON
+    LOG_CONFIGURE ON
+    LOG_BUILD ON)
+
+# External libraires
+SET_PROPERTY(TARGET easyloggingpp PROPERTY FOLDER "external")
+
+# Get include directory of external project
+INCLUDE_DIRECTORIES(${ELPP_INSTALL_DIR}/include)
 
 # add the PSM subdirectory
 message("Configuring PSM...")

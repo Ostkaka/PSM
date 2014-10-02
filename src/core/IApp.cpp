@@ -2,13 +2,8 @@
 * This is the IApp file governing all underlying game mechanics in an application
 */
 #include <assert.h>
-#include <MGE/Core/interfaces/IApp.hpp>
-#include <MGE/Core/interfaces/IState.hpp>
-#include <MGE/Core/assets/TextureHandler.hpp>
-#include <MGE/Core/assets/MusicHandler.hpp>
-#include <MGE/Core/assets/SoundHandler.hpp>
-#include <MGE/Core/assets/FontHandler.hpp>
-#include <MGE/Core/loggers/Log.hpp>
+#include <core/interfaces/IApp.hpp>
+#include <core/interfaces/IState.hpp>
 #include <iostream>
 
 namespace MGE 
@@ -25,11 +20,7 @@ namespace MGE
 		mVideoMode(DEFAULT_VIDEO_WIDTH, DEFAULT_VIDEO_HEIGHT, DEFAULT_VIDEO_BPP),
 		mWindow(),
 		mContextSettings(),
-		mWindowStyle(sf::Style::Close | sf::Style::Resize),
-		mGraphicRange(LowRange),
-		mAssetManager(),
-		mStatManager(),
-		mStateManager(),
+		mWindowStyle(sf::Style::Close | sf::Style::Resize),		
 		mExitCode(0),
 		mRunning(false),
 		mUpdateRate((int)(1000.0f / 20.0f)), // 20 updates per second
@@ -58,42 +49,27 @@ namespace MGE
 
 	void IApp::processArguments( int argc, char* argv[] )
 	{
-		//This is to be implemented
-		// Handle command line arguments
-		// TODO: Add handling of command line arguments
-		if(argc == 1)
-		{
-			ILOG() << "IApp::ProcessArguments(" << argv[0] << ") command line: (none)" << std::endl;
-		}
-		else
-		{
-			ILOG() << "IApp::ProcessArguments(" << argv[0] << ") command line:" << std::endl;
-			for(int iloop = 1; iloop<argc; iloop++)
-			{
-				ILOG() << "Argument" << iloop << "=(" << argv[iloop] << ")" << std::endl;
-			}
-		}
 	}
 
 	int IApp::run()
 	{
 		//Logger stuff
-		SLOG(App_Run,SeverityInfo) << std::endl;
+		//SLOG(App_Run,SeverityInfo) << std::endl;
 
 		//Set running as true
 		mRunning = true;
 
 		//Register basic Assethandler
-		mAssetManager.registerHandler(new(std::nothrow) TextureHandler());
-		mAssetManager.registerHandler(new(std::nothrow) MusicHandler());
-		mAssetManager.registerHandler(new(std::nothrow) SoundHandler());
-		mAssetManager.registerHandler(new(std::nothrow) FontHandler());
+		//mAssetManager.registerHandler(new(std::nothrow) TextureHandler());
+		//mAssetManager.registerHandler(new(std::nothrow) MusicHandler());
+		//mAssetManager.registerHandler(new(std::nothrow) SoundHandler());
+		//mAssetManager.registerHandler(new(std::nothrow) FontHandler());
 
 		// Register our App pointer with our StateManager
-		mStateManager.registerApp(this);
+		//mStateManager.registerApp(this);
 
 		// Register Statmanager
-		mStatManager.registerApp(this);
+		//mStatManager.registerApp(this);
 
 		// Register custom asset classes
 		initCustomAssetHandlers();
@@ -137,16 +113,7 @@ namespace MGE
 	{
 		return mRunning;
 	}
-
-	void IApp::setGraphicRange(const GraphicRange theGraphicRange)
-	{
-		// Sanity check theGraphicRange provided
-		if(theGraphicRange >= LowRange && theGraphicRange <= HighRange)
-		{
-			mGraphicRange = theGraphicRange;
-		}
-	}
-
+	
 	float IApp::getUpdateRate(void) const
 	{
 		// Return the current set UpdateFixed game loop rate
@@ -162,53 +129,22 @@ namespace MGE
 		}
 	}
 
-	void IApp::setMaxUpdates(int newMaxUpdates)
-	{
-		// Validate Max Updates range first
-		if(200 >= newMaxUpdates && 1 <= newMaxUpdates)
-		{
-			// Set max updates value to theMaxUpdates value provided
-			mMaxUpdates = newMaxUpdates;
-		}
-	}
-
 	void IApp::quit(int theExitCode)
 	{
 		mExitCode = theExitCode;
 		mRunning = false;
 	}
 
-	const GraphicRange IApp::calculateRange(int theHeight) const
-	{
-		// Default to LowRange
-		GraphicRange anResult = LowRange;
-
-		// Do we fall under the Medium Range category?
-		if(((theHeight - 240) / 10.0) > 52.0 && ((theHeight - 240) / 10.0) <= 72.0)
-		{
-			// Return MidRange
-			anResult = MidRange;
-		}
-		else if(((theHeight - 240) / 10.0) > 72.0)
-		{
-			// Return HighRange
-			anResult = HighRange;
-		}
-
-		// Return anResult determined above or the default of LowRange
-		return anResult;
-	}
-
 	void IApp::initConfig()
 	{
-		SLOG(App_InitSettingsConfig, SeverityInfo) << std::endl;
+		//SLOG(App_InitSettingsConfig, SeverityInfo) << std::endl;
 		//ConfigAsset anSettingsConfig(IApp::APP_SETTINGS);
 	}
 
 	void IApp::initRenderer()
 	{
 		
-		SLOG(App_InitRenderer, SeverityInfo) << std::endl;
+		//SLOG(App_InitRenderer, SeverityInfo) << std::endl;
 		//ConfigAsset anSettingsConfig(IApp::APP_SETTINGS);
 
 		// Are we in Fullscreen mode?
@@ -236,23 +172,19 @@ namespace MGE
 		mVideoMode.width = DEFAULT_VIDEO_WIDTH;
 		mVideoMode.height = DEFAULT_VIDEO_HEIGHT;
 		mVideoMode.bitsPerPixel = DEFAULT_VIDEO_BPP;
-
-		// Calculate and set GraphicRange value
-		setGraphicRange(calculateRange(mVideoMode.height));
-
+		
 		// Create a RenderWindow object using VideoMode object above
 		mWindow.create(mVideoMode, mTitle, mWindowStyle, mContextSettings);
 
 		// Use Vertical Sync
 		//mWindow.setVerticalSyncEnabled(true);
 
-		sf::WindowHandle handle = mWindow.getSystemHandle();
-		
+		sf::WindowHandle handle = mWindow.getSystemHandle();		
 	}
 
 	void IApp::gameLoop(void)
 	{
-		SLOG(App_GameLoop, SeverityInfo) << std::endl;
+		//SLOG(App_GameLoop, SeverityInfo) << std::endl;
 
 		// Clock used in restricting Update loop to a fixed rate
 		sf::Clock anUpdateClock;
@@ -267,11 +199,11 @@ namespace MGE
 		sf::Int32 anUpdateNext = anUpdateClock.getElapsedTime().asMilliseconds();
 
 		// Make sure we have at least one state active
-		if(mStateManager.isEmpty())
+		/*if(mStateManager.isEmpty())
 		{
 			// Exit with an error since there isn't an active state
 			quit(StatusAppInitFailed);
-		}
+		}*/
 
 		// Loop while IsRunning returns true
 		while(isRunning() && mWindow.isOpen() && !mStateManager.isEmpty())
