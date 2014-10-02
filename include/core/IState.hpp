@@ -1,14 +1,14 @@
 /*
-* This is the abstract IState class in MGE used as an interface
+* This is the abstract IState class in psm used as an interface
 */
 #ifndef   CORE_ISTATE_HPP
 	#define   CORE_ISTATE_HPP
 
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
-#include <MGE/Core/Core_types.hpp>
+#include <core/core_types.hpp>
 
-namespace MGE
+namespace psm
 {
 	class IState  {
     	public:
@@ -82,19 +82,13 @@ namespace MGE
        * @param[in] theEvent to process from the App class Loop method
        */
       virtual void handleEvents(sf::Event aEvent);
-
-			/**
-       * updateFixed is responsible for handling all State fixed update needs for
-       * this State when it is the active State.
-       */
-      virtual void updateFixed() = 0;
-
-			/**
+ 
+	  /**
       * updateVariable is responsible for handling all State variable update
       * needs for this State when it is the active State.
       * @param[in] theElapsedTime since the last Draw was called
       */
-      virtual void updateVariable(float elapsedTime) = 0;
+	  virtual void update(DeltaTime elapsedTime) = 0;
 
 			/**
        * Draw is responsible for handling all Drawing needs for this State

@@ -16,6 +16,7 @@ INCLUDE(ExternalProject)
 # Set default ExternalProject root directory
 set(EP_PREFIX ${CMAKE_BINARY_DIR}/dependencies)
 SET_DIRECTORY_PROPERTIES(PROPERTIES EP_PREFIX ${EP_PREFIX})
+SET( DEPENDENCIES_DIR ${CMAKE_BINARY_DIR}/dependencies)
 
 # define the path of our additional CMake modules
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake/Modules/)
@@ -34,11 +35,17 @@ include_directories(
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 
+# Build targets
+SET( PSMCORE_TARGET_NAME "core")
+
+set( PSM_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
+set( PSM_SOURCE_DIR ${PROJECT_SOURCE_DIR}/src)
+
 # Properties
 SET_PROPERTY(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # find external SFML libraries --- hmm, can make macro out of this! Too much repetition of code!
-set(SFML_INSTALL_DIR dependencies/sfml/)
+set(SFML_INSTALL_DIR ${DEPENDENCIES_DIR}/sfml/)
 ExternalProject_Add(
     sfml
     GIT_REPOSITORY https://github.com/LaurentGomila/SFML.git
@@ -55,11 +62,6 @@ ExternalProject_Add(
 
 SET_PROPERTY(TARGET sfml PROPERTY FOLDER "external")
 
-SET( PSMCORE_TARGET_NAME "core")
-
-set( PSM_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
-set( PSM_SOURCE_DIR ${PROJECT_SOURCE_DIR}/src)
-
 # Get include directory of external project
 INCLUDE_DIRECTORIES(${SFML_INSTALL_DIR}/include)
 
@@ -68,7 +70,7 @@ INCLUDE_DIRECTORIES(${SFML_INSTALL_DIR}/bin)
 set(SFML_LIB_DIR ${SFML_INSTALL_DIR}/lib)
 
 # External libraries easylogging
-set(ELPP_INSTALL_DIR dependencies/sfml/)
+set(ELPP_INSTALL_DIR ${DEPENDENCIES_DIR}/easylogging/)
 ExternalProject_Add(
     easyloggingpp
     GIT_REPOSITORY https://github.com/easylogging/easyloggingpp.git
@@ -76,9 +78,10 @@ ExternalProject_Add(
     # Force separate output paths for debug and release builds to allow easy
     # identification of correct lib in subsequent TARGET_LINK_LIBRARIES commands
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${ELPP_INSTALL_DIR}
-               -DCMAKE_CXX_FLAGS=${MSVC_COMPILER_DEFS}
-               -DBUILD_SHARED_LIBS=ON
     # Wrap download, configure and build steps in a script to log output   
+    CONFIGURE_COMMAND ""
+    BUILD_COMMAND ""
+    INSTALL_COMMAND ""
     LOG_DOWNLOAD ON
     LOG_CONFIGURE ON
     LOG_BUILD ON)
@@ -94,9 +97,6 @@ message("Configuring PSM...")
 add_subdirectory(src/core)
 
 # add the examples subdirectory
-if(BUILD_EXAMPLES)
-	message("Configuring examples...")
-    add_subdirectory(examples)
-endif()
-
+message("Configuring application...")
+add_subdirectory(application)
 

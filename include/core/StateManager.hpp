@@ -1,20 +1,19 @@
 /**
 *	StateManager class 
 **/
-
 #ifndef   CORE_STATE_MANAGER_HPP
 	#define   CORE_STATE_MANAGER_HPP
 
 #include <vector>
 #include <string>
-#include <MGE/Core/Core_types.hpp>
+#include <Core/Core_types.hpp>
 
-namespace MGE
+namespace psm
 {
 	/// Provides game state manager class for managing game states
 	class StateManager
 	{
-		public:
+	public:
       /**
        * StateManager constructorb
        */
@@ -32,22 +31,7 @@ namespace MGE
        */
       void registerApp(IApp* theApp);
 
-			 /**
-       * AddCleanup is responsible for adding a class and member function
-       * to call during the HandleCleanup method call of the game loop. When
-       * this event is called, a pointer to the current IState class will
-       * be provided as the Context variable to be used.
-       * @param[in] theEventID to use for this event, must be unique
-       */
-      /**template<class TCLASS>
-      void AddCleanup(const typeEventID theEventID, TCLASS& theEventClass,
-        typename TEvent<TCLASS, void>::typeEventFunc theEventFunc)
-      {
-        mCleanupEvents.Add<TCLASS, void>(theEventID, theEventClass, theEventFunc);
-      }
-			**/
-
-			/**
+     /**
       * isEmpty will return true if there are no active states on the stack.
       * @return true if state stack is empty, false otherwise.
       */
@@ -73,7 +57,7 @@ namespace MGE
       */
       IState& getActiveState();
 
-			/**
+	  /**
       * inactivateActiveState will cause the current active state to
       * become an inactive state without uninitializing its assets (doesn't
       * call DeInit) and return to the previous state on the stack. This
@@ -81,7 +65,7 @@ namespace MGE
       */
       void inactivateActivateState();
 
-			/**
+	  /**
        * dropActiveState will cause the current active state to uninitialize
        * (calls DeInit) and become an inactive state and return to the
        * previous state on the stack. When a state is uninitialized its
@@ -89,13 +73,13 @@ namespace MGE
        */
       void dropActiveState();
 
-			/**
+	  /**
        * resetActiveState will cause the current active state to be reset
        * by calling the ReInit method for that state. 
        */
       void resetActiveState();
 
-			 /**
+	  /**
        * removeActiveState will cause the current active state to be removed
        * and return to the previous state on the stack.  Once a state has
        * been removed, you must re-add the state.  If you just want to
@@ -117,7 +101,7 @@ namespace MGE
        */
       void cleanup(void);
 
-		private:
+	 private:
 
       ///////////////////////////////////////////////////////////////////////////
       /// Pointer to the App class for error handling and logging

@@ -11,49 +11,49 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <core/Core_types.hpp>
+#include <core/StateManager.hpp>
 
-namespace MGE
+namespace psm
 {
 	class IApp 
 	{
 		public:
-			/**
-       * IApp deconstructor
-       */
-      virtual ~IApp();
+		/**
+        * IApp deconstructor
+        */
+		virtual ~IApp();
 
-			/**
-			* Will return the most recent created IApp based class. Used for retrieving 
-			* assets among other things
-			*/
-			static IApp * getApp();
+		/**
+		* Will return the most recent created IApp based class. Used for retrieving 
+		* assets among other things
+		*/
+		static IApp * getApp();
 
-			/*
-			* Processes the command line for arguments 
-			* @param[in] argc is the number of arguments
-			* @param[in] argv are the actual arguments
-			*/
-			virtual void processArguments(int argc, char* argv[]);
+		/*
+		* Processes the command line for arguments 
+		* @param[in] argc is the number of arguments
+		* @param[in] argv are the actual arguments
+		*/
+		virtual void processArguments(int argc, char* argv[]);
 
-			/**
-			*
-			*@return Valued of the exit-code given by the application by using quit.
-			*/
-			int run();
+		/**
+		*
+		*@return Valued of the exit-code given by the application by using quit.
+		*/
+		int run();
 
-			/**
-			* Used to check in case the application is still running
-			* @return True if the application is running or False if it still is
-			*/
-			bool isRunning() const;
-
+		/**
+		* Used to check in case the application is still running
+		* @return True if the application is running or False if it still is
+		*/
+		bool isRunning() const;
  
-       /**
-       * Returns the current game loop update rate being
-       * used.
-       * @return update rate in Hz (updates per second)
-       */
-      float getUpdateRate() const;
+        /**
+        * Returns the current game loop update rate being
+        * used.
+        * @return update rate in Hz (updates per second)
+        */
+        float getUpdateRate() const;
 
 			      /**
        * SetUpdateRate will set the game loop update rate to theRate specified
@@ -74,7 +74,7 @@ namespace MGE
 	   void quit(int exitCode = 1);
 
 
-		protected:
+	 protected:
 
       /**
        * Basic constructor
@@ -144,18 +144,18 @@ namespace MGE
 
 		public:
 		  ///CONSTANTS
-			/// Default Video width
-			static const unsigned int DEFAULT_VIDEO_WIDTH = 800;
-			/// Default Video height 
-			static const unsigned int DEFAULT_VIDEO_HEIGHT = 600;
-			/// Default video bits per pixel (color depth) 
-			static const unsigned int DEFAULT_VIDEO_BPP = 32;
-			/// Default application wide settings file string
+		  /// Default Video width
+		  static const unsigned int DEFAULT_VIDEO_WIDTH = 800;
+		  /// Default Video height 
+		  static const unsigned int DEFAULT_VIDEO_HEIGHT = 600;
+		  /// Default video bits per pixel (color depth) 
+		  static const unsigned int DEFAULT_VIDEO_BPP = 32;
+		  /// Default application wide settings file string
 		  static const char* APP_SETTINGS;
 
 		  //////////////////////////////////////////////////////////////////////////
-			// Vairables
-			//////////////////////////////////////////////////////////////////////////
+		  // Vairables
+		  //////////////////////////////////////////////////////////////////////////
 		  /// Title to use for Window
 		  std::string               mTitle;
 		  /// Video Mode to use (width, height, bpp)
@@ -181,7 +181,7 @@ namespace MGE
 			bool					mRunning;
 
 			/// Value that holds the update rate in milliseconds used for a fixed loop time
-			float					mUpdateRate;
+			DeltaTime    			mUpdateRate;
 	};
 }
 

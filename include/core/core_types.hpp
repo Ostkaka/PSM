@@ -13,13 +13,6 @@
 #include <map>
 #include <string>
 #include <vector>
-#include <ant_config.hpp>
-
-#define INFO_LEVEL   0  ///< Defines the value for ant::SeverityInfo
-#define WARN_LEVEL   1  ///< Defines the value for ant::SeverityWarning
-#define ERROR_LEVEL  2  ///< Defines the value for ant::SeverityError
-#define FATAL_LEVEL  3  ///< Defines the value for ant::Severity
-#define NO_LOG_LEVEL 4  ///< Defines the value for no logging
 
 /// Inline macro
 #define PSM_FORCE_INLINE _forceinline
@@ -27,19 +20,8 @@
 
 #define PSM_OVERRIDE override
 
-namespace ant 
+namespace psm
 {
-
-  /// Enumeration of all Logging severity types
-  enum SeverityType
-  {
-    // Logger severity types range from 0 to 5
-    SeverityInfo          = INFO_LEVEL,   ///< Informational severity type
-    SeverityWarning       = WARN_LEVEL,   ///< Warning severity type
-    SeverityError         = ERROR_LEVEL,  ///< Error severity type
-    SeverityFatal         = FATAL_LEVEL   ///< Fatal severity type
-  };
-
   /// Status Enumeration for Status Return values
   enum StatusType
   {
@@ -61,7 +43,7 @@ namespace ant
   typedef float Real;
   typedef unsigned int UInt;
   typedef unsigned long Ulong;
-  typedef double DeltaTime;
+  typedef float DeltaTime;
   typedef float TimeStamp;
   typedef std::vector<std::string> StringVector;
 
@@ -97,7 +79,7 @@ namespace ant
   /// Declare NameValueIter typedef which is used for name,value pair maps
   typedef std::map<const std::string, const std::string>::iterator typeNameValueIter;
     
-  typedef BYTE CharCode;
+  //typedef BYTE CharCode;
 }
 
 #endif  //ANT_CORE_TYPES_HPP

@@ -3,11 +3,10 @@
 */
 
 #include <assert.h>
-#include <MGE/Core/interfaces/IState.hpp>
-#include <MGE/Core/loggers/Log.hpp>
-#include <MGE/Core/interfaces/IApp.hpp>
+#include <core/IState.hpp>
+#include <core/IApp.hpp>
 
-namespace MGE
+namespace psm
 {
 	IState::IState(const typeStateID stateID, IApp& theApp) :
 		mApp(theApp),
@@ -18,12 +17,10 @@ namespace MGE
 		mElapsedTime(0.0f),
 		mPausedTime(0.0f)
 	{
-		ILOG() << "IState::ctor(" << mStateID << ")" << std::endl;
 	}
 
 	IState::~IState()
 	{
-		ILOG() << "IState::dtor(" << mStateID << ")" << std::endl;
 	}
 
 	const typeStateID IState::getID(void) const
@@ -33,8 +30,6 @@ namespace MGE
 
 	void IState::init(void)
 	{
-		ILOG() << "IState::DoInit(" << mStateID << ")" << std::endl;
-
 		// If Cleanup hasn't been called yet, call it now!
 		if(true == mCleanup)
 		{
@@ -55,7 +50,6 @@ namespace MGE
 
 	void IState::deInit()
 	{
-		ILOG() << "IState::DeInit(" << mStateID << ")" << std::endl;
 
 		if(true == mInit)
 		{
@@ -81,8 +75,6 @@ namespace MGE
 
 	void IState::pause()
 	{
-		ILOG() << "IState::Pause(" << mStateID << ")" << std::endl;
-
 		if(false == mPaused)
 		{
 			mPaused = true;
@@ -92,8 +84,6 @@ namespace MGE
 
 	void IState::resume()
 	{
-		ILOG() << "IState::Resume(" << mStateID << ")" << std::endl;
-
 		if(true == mPaused)
 		{
 			mPaused = false;

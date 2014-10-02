@@ -4,22 +4,19 @@
 
 #include <assert.h>
 #include <stddef.h>
-#include <MGE/Core/loggers/Log.hpp>
-#include <MGE/Core/classes/StateManager.hpp>
-#include <MGE/Core/interfaces/IApp.hpp>
-#include <MGE/Core/interfaces/IState.hpp>
+#include <core/StateManager.hpp>
+#include <core/IApp.hpp>
+#include <core/IState.hpp>
 
-namespace MGE
+namespace psm
 {
 	StateManager::StateManager() :
-	mApp(NULL)
-	{
-		ILOGM("StateManager::ctor()");
+	mApp(nullptr)
+	{		
 	}
 
 	StateManager::~StateManager()
-	{
-		ILOGM("StateManager::dtor()");
+	{		
 		// Drop all active states
 		while(!mStack.empty())
 		{
@@ -42,7 +39,7 @@ namespace MGE
 			delete anState;
 
 			// Clear pointer
-			anState = NULL;
+			anState = nullptr;
 		}
 
 		// Delete all our dropped states
@@ -67,20 +64,20 @@ namespace MGE
 			delete anState;
 
 			// Clear pointer
-			anState = NULL;
+			anState = nullptr;
 		}
 
 		// Clear pointers 
-		mApp = NULL;
+		mApp = nullptr;
 	}
 
 	void StateManager::registerApp(IApp* app)
 	{
 		// Check that our pointer is good
-		assert(NULL != app && "StateManager::registerApp() theApp pointer is bad");
+		assert(nullptr != app && "StateManager::registerApp() theApp pointer is bad");
 
 		// Make a note of the pointer
-		assert(NULL == mApp && "StateManager::registerApp() theApp pointer already registered");
+		assert(nullptr == mApp && "StateManager::registerApp() theApp pointer already registered");
 		mApp = app;
 	}
 
@@ -92,11 +89,8 @@ namespace MGE
 	void StateManager::addActiveState(IState* state)
 	{
 		// Check that they didn't provide a bad pointer
-		assert(NULL != state && "StateManager::addActiveState() received a bad pointer");
-
-		// Log the adding of each state
-		ILOG() << "StateManager::AddActiveState(" << state->getID() << ")" << std::endl;
-
+		assert(nullptrptr != state && "StateManager::addActiveState() received a bad pointer");
+		
 		// Is there a state currently running? then Pause it
 		if(!mStack.empty())
 		{
@@ -115,11 +109,8 @@ namespace MGE
 	void StateManager::addInactiveState(IState* state)
 	{
 		// Check that they didn't provide a bad pointer
-		assert(NULL != state && "StateManager::addInactiveState() received bad pointer");
-
-		// Log the adding of each state
-		ILOG() << "StateManager::AddInactiveState(" << state->getID() << ")" << std::endl;
-
+		assert(nullptr != state && "StateManager::addInactiveState() received bad pointer");
+		
 		// Add the inactive state to the bottom of the stack
 		mStack.insert(mStack.begin(), state);
 	}
@@ -136,10 +127,7 @@ namespace MGE
 		{
 			// Retrieve the currently active state
 			IState* state = mStack.back();
-
-			// Log the inactivating an active state
-			ILOG() << "StateManager::InactivateActiveState(" << state->getID() << ")" << std::endl;
-
+			
 			// Pause the currently active state
 			state->pause();
 
@@ -150,12 +138,12 @@ namespace MGE
 			mStack.insert(mStack.begin(), state);
 
 			// Don't keep pointers around we don't need anymore
-			state = NULL;
+			state = nullptr;
 		}
 		else
 		{
 			// Quit the application with an error status response
-			if(NULL != mApp)
+			if(nullptr != mApp)
 			{
 				mApp->quit(StatusAppStackEmpty);
 			}
@@ -180,7 +168,7 @@ namespace MGE
 		else
 		{
 			// There are no states on the stack, exit the program
-			if(NULL != mApp)
+			if(nullptr != mApp)
 			{
 				mApp->quit(StatusAppOK);
 			}
@@ -194,10 +182,7 @@ namespace MGE
 		{
 			// Retrieve the currently active state
 			IState* state = mStack.back();
-
-			// Log the dropping of an active state
-			ILOG() << "StateManager::DropActiveState(" << state->getID() << ")" << std::endl;
-
+	
 			// Pause the currently active state
 			state->pause();
 
@@ -213,12 +198,12 @@ namespace MGE
 			mStack.insert(mStack.begin(), state);
 
 			// Don't keep pointers around we don't need anymore
-			state = NULL;
+			state = nullptr;
 		}
 		else
 		{
 			// Quit the application with an error status response
-			if(NULL != mApp)
+			if(nullptr != mApp)
 			{
 				mApp->quit(StatusAppStackEmpty);
 			}
@@ -243,7 +228,7 @@ namespace MGE
 		else
 		{
 			// There are no states on the stack, exit the program
-			if(NULL != mApp)
+			if(nullptr != mApp)
 			{
 				mApp->quit(StatusAppOK);
 			}
@@ -258,9 +243,6 @@ namespace MGE
 			// Retrieve the currently active state
 			IState* anState = mStack.back();
 
-			// Log the resetting of an active state
-			ILOG() << "StateManager::ResetActiveState(" << anState->getID() << ")" << std::endl;
-
 			// Pause the currently active state
 			anState->pause();
 
@@ -271,12 +253,12 @@ namespace MGE
 			anState->resume();
 
 			// Don't keep pointers around we don't need anymore
-			anState = NULL;
+			anState = nullptr;
 		}
 		else
 		{
 			// Quit the application with an error status response
-			if(NULL != mApp)
+			if(nullptr != mApp)
 			{
 				mApp->quit(StatusAppStackEmpty);
 			}
@@ -291,10 +273,7 @@ namespace MGE
 		{
 			// Retrieve the currently active state
 			IState* anState = mStack.back();
-
-			// Log the removing of an active state
-			ILOG() << "StateManager::RemoveActiveState(" << anState->getID() << ")" << std::endl;
-
+	
 			// Pause the currently active state
 			anState->pause();
 
@@ -308,12 +287,12 @@ namespace MGE
 			mDead.push_back(anState);
 
 			// Don't keep pointers around we don't need anymore
-			anState = NULL;
+			anState = nullptr;
 		}
 		else
 		{
 			// Quit the application with an error status response
-			if(NULL != mApp)
+			if(nullptr != mApp)
 			{
 				mApp->quit(StatusAppStackEmpty);
 			}
@@ -338,7 +317,7 @@ namespace MGE
 		else
 		{
 			// There are no states on the stack, exit the program
-			if(NULL != mApp)
+			if(nullptr != mApp)
 			{
 				mApp->quit(StatusAppOK);
 			}
@@ -358,10 +337,7 @@ namespace MGE
 			{
 				// Get a pointer to soon to be currently active state
 				IState* anState = *it;
-
-				// Log the setting of a previously active state as the current active state
-				ILOG() << "StateManager::SetActiveState(" << anState->getID() << ")" << std::endl;
-
+	
 				// Erase it from the list of previously active states
 				mStack.erase(it);
 
@@ -377,7 +353,7 @@ namespace MGE
 				mStack.push_back(anState);
 
 				// Don't keep pointers we don't need around
-				anState = NULL;
+				anState = nullptr;
 
 				// Has this state ever been initialized?
 				if(mStack.back()->isInitComplete())
@@ -407,7 +383,7 @@ namespace MGE
 		{
 			// Retrieve the dead state
 			IState* anState = mDead.back();
-			assert(NULL != anState && "StateManager::HandleCleanup() invalid dropped state pointer");
+			assert(nullptr != anState && "StateManager::HandleCleanup() invalid dropped state pointer");
 
 			// Pop the dead state off the stack
 			mDead.pop_back();
@@ -425,14 +401,14 @@ namespace MGE
 			delete anState;
 
 			// Don't keep pointers around we don't need
-			anState = NULL;
+			anState = nullptr;
 		}
 
 		// Make sure we still have an active state
-		if(NULL == mStack.back())
+		if(nullptr == mStack.back())
 		{
 			// There are no states on the stack, exit the program
-			if(NULL != mApp)
+			if(nullptr != mApp)
 			{
 				mApp->quit(StatusAppOK);
 			}
