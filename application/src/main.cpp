@@ -30,7 +30,7 @@ int main(int argc, char* argv[]){
 
 	delete app;
 
-	app = NULL;
+	app = nullptr;
 
 	return exitCode;
 }

@@ -12,6 +12,7 @@
 #include <SFML/Graphics.hpp>
 #include <core/Core_types.hpp>
 #include <core/StateManager.hpp>
+#include <core/AssetManager.hpp>
 
 namespace psm
 {
@@ -166,6 +167,9 @@ namespace psm
 		  sf::ContextSettings       mContextSettings;
 		  /// Window style to use when creating Render window
 		  unsigned long             mWindowStyle;
+
+		  /// AssetManager
+		  AssetManager              mAssetManager;
 
           /// StateManager for managing states
 		  StateManager              mStateManager;

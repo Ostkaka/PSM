@@ -404,8 +404,8 @@ namespace psm
 			anState = nullptr;
 		}
 
-		// Make sure we still have an active state
-		if(nullptr == mStack.back())
+		// Check if we don't have any active states
+		if(mStack.empty() || nullptr == mStack.back())
 		{
 			// There are no states on the stack, exit the program
 			if(nullptr != mApp)

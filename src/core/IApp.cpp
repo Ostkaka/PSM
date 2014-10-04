@@ -4,6 +4,7 @@
 #include <assert.h>
 #include <core/IApp.hpp>
 #include <core/IState.hpp>
+#include <core/TextureHandler.hpp>
 #include <iostream>
 
 namespace psm
@@ -12,7 +13,7 @@ namespace psm
 	const char* IApp::APP_SETTINGS = "resources/settings.cfg";
 
 	/// Single instance of the most recently created App class
-	IApp* IApp::gApp = NULL;
+	IApp* IApp::gApp = nullptr;
 
 	// Implementations
 	IApp::IApp( const std::string theTitle /*= "MGE Application"*/ ):
@@ -37,7 +38,7 @@ namespace psm
 		// Are we going out of scope? then remove our static pointer
 		if(gApp == this)
 		{
-			gApp = NULL;
+			gApp = nullptr;
 		}
 	}
 
@@ -59,13 +60,13 @@ namespace psm
 		mRunning = true;
 
 		//Register basic Assethandler
-		//mAssetManager.registerHandler(new(std::nothrow) TextureHandler());
+		mAssetManager.registerHandler(new(std::nothrow) TextureHandler());
 		//mAssetManager.registerHandler(new(std::nothrow) MusicHandler());
 		//mAssetManager.registerHandler(new(std::nothrow) SoundHandler());
 		//mAssetManager.registerHandler(new(std::nothrow) FontHandler());
 
 		// Register our App pointer with our StateManager
-		//mStateManager.registerApp(this);
+		mStateManager.registerApp(this);
 
 		// Register Statmanager
 		//mStatManager.registerApp(this);

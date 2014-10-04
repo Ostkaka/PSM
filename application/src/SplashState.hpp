@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <core/IState.hpp>
-//#include <core/assets/TextureAsset.hpp>
+#include <core/TextureAsset.hpp>
 #include <core/Core_types.hpp>
 
 #include <string>
@@ -67,6 +67,7 @@ private:
 
 	float mSplashDuration;	
 	sf::Sprite mSpalshScreenSprite;
+	psm::TextureAsset mSpashScreenAsset;
 	
 }; // class GameState
 

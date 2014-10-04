@@ -3,7 +3,8 @@
 
 SplashState::SplashState(psm::IApp& app, float splashDuration) :
 psm::IState("Splash", app),
-mSplashDuration(splashDuration)
+mSplashDuration(splashDuration),
+mSpashScreenAsset("D:/GameProjects/MGE/resources/pss.jpg")
 {
 }
 
@@ -14,6 +15,7 @@ SplashState::~SplashState()
 void SplashState::init()
 {
 	IState::init();	
+	mSpalshScreenSprite.setTexture(mSpashScreenAsset.getAsset());
 }
 
 void SplashState::reset()

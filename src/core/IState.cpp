@@ -50,7 +50,6 @@ namespace psm
 
 	void IState::deInit()
 	{
-
 		if(true == mInit)
 		{
 			mCleanup = true;
