@@ -66,8 +66,8 @@ namespace psm
 	}
 
 	/**
-        * getAsset will return the Asset if it is available.
-        * @return pointer to the Asset or Dummy asset if not existing yet
+    * getAsset will return the Asset if it is available.
+    * @return pointer to the Asset or Dummy asset if not existing yet
     */
 	T& getAsset()
 	{
@@ -124,12 +124,12 @@ namespace psm
 	// Vairables
 	//////////////////////////////////////////////////////////////////////////
 	protected:
-			/// The derived asset handler for managing this resource type
-			TAssetHandler<T>&	mAssetHandler;
-			/// Pointer to the asset of type T
-			T *					mAsset;
-			/// The string ID specified for this type of asset
-			typeAssetID			mAssetID;
+	/// The derived asset handler for managing this resource type
+	TAssetHandler<T>&	mAssetHandler;
+	/// Pointer to the asset of type T
+	T *					mAsset;
+	/// The string ID specified for this type of asset
+	typeAssetID			mAssetID;
 
 			
 	};
