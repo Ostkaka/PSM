@@ -9,7 +9,7 @@ FILE( GLOB SOURCE ${SRCROOT}/*.cpp ${SRCROOT}/*.hpp ${SRCROOT}/*.h)
 add_executable(application ${SOURCE})
 
 # link dependecies
-target_link_libraries(application ${PSM_LIBS})
+target_link_libraries(application ${PSMCORE_TARGET_NAME})
 
 # properties
 SET_PROPERTY(TARGET application PROPERTY FOLDER "application")

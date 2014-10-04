@@ -1,4 +1,5 @@
 #include "App.hpp"
+#include "SplashState.hpp"
 #include <core/IState.hpp>
 #include <ctime>
 
@@ -9,7 +10,7 @@ using namespace psm;
 
 PSMAPP::PSMAPP(const std::string title /*= "TestApp"*/) :
 IApp(title)
-{	
+{		
 }
 
 PSMAPP::~PSMAPP()
@@ -24,7 +25,7 @@ void PSMAPP::initCustomAssetHandlers()
 void PSMAPP::initCustomGameStates()
 {
 	//mStateManager.addActiveState(new(std::nothrow) InitState(*this));
-	//mStateManager.addInactiveState(new(std::nothrow) SplashState(*this,5));
+	mStateManager.addInactiveState(new(std::nothrow) SplashState(*this,5));
 	//mStateManager.addInactiveState(new(std::nothrow) GameState(*this));
 }
 

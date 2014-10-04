@@ -46,6 +46,11 @@ SET_PROPERTY(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # find external SFML libraries --- hmm, can make macro out of this! Too much repetition of code!
 set(SFML_INSTALL_DIR ${DEPENDENCIES_DIR}/sfml/)
+
+get_filename_component(SFML_INSTALL_DIR ${SFML_INSTALL_DIR} ABSOLUTE)
+
+message("Compiler flags: " ${MSVC_COMPILER_DEFS})
+
 ExternalProject_Add(
     sfml
     GIT_REPOSITORY https://github.com/LaurentGomila/SFML.git
@@ -56,6 +61,7 @@ ExternalProject_Add(
                -DCMAKE_CXX_FLAGS=${MSVC_COMPILER_DEFS}
                -DBUILD_SHARED_LIBS=ON
     # Wrap download, configure and build steps in a script to log output   
+    UPDATE_COMMAND ""
     LOG_DOWNLOAD ON
     LOG_CONFIGURE ON
     LOG_BUILD ON)
@@ -81,6 +87,7 @@ ExternalProject_Add(
     # Wrap download, configure and build steps in a script to log output   
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
+    UPDATE_COMMAND ""
     INSTALL_COMMAND ""
     LOG_DOWNLOAD ON
     LOG_CONFIGURE ON

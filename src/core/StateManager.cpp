@@ -89,7 +89,7 @@ namespace psm
 	void StateManager::addActiveState(IState* state)
 	{
 		// Check that they didn't provide a bad pointer
-		assert(nullptrptr != state && "StateManager::addActiveState() received a bad pointer");
+		assert(nullptr != state && "StateManager::addActiveState() received a bad pointer");
 		
 		// Is there a state currently running? then Pause it
 		if(!mStack.empty())

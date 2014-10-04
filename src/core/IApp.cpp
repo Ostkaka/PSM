@@ -23,7 +23,7 @@ namespace psm
 		mWindowStyle(sf::Style::Close | sf::Style::Resize),		
 		mExitCode(0),
 		mRunning(false),
-		mUpdateRate((int)(1000.0f / 20.0f)) // 20 updates per second
+		mUpdateRate((int)(1.0f / 20.0f)) // 20 updates per second
 	{
 		// Save our global App pointer
 		gApp = this;

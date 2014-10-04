@@ -27,5 +27,4 @@ protected:
 	virtual void handleCustomCleanup();
 
 	void processInput(IState& theState);	
-
 };
